@@ -115,6 +115,122 @@ export type Database = {
           },
         ]
       }
+      order_items: {
+        Row: {
+          created_at: string
+          gst_percent: number
+          id: string
+          line_total: number
+          medicine_id: string
+          medicine_name: string
+          order_id: string
+          quantity: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          gst_percent?: number
+          id?: string
+          line_total: number
+          medicine_id: string
+          medicine_name: string
+          order_id: string
+          quantity: number
+          unit_price: number
+        }
+        Update: {
+          created_at?: string
+          gst_percent?: number
+          id?: string
+          line_total?: number
+          medicine_id?: string
+          medicine_name?: string
+          order_id?: string
+          quantity?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_medicine_id_fkey"
+            columns: ["medicine_id"]
+            isOneToOne: false
+            referencedRelation: "medicines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          gst_amount: number
+          id: string
+          notes: string | null
+          order_number: string
+          payment_status: Database["public"]["Enums"]["payment_status"]
+          placed_by: string
+          processed_at: string | null
+          processed_by: string | null
+          rejection_reason: string | null
+          retailer_id: string
+          shipping_address: string | null
+          status: Database["public"]["Enums"]["order_status"]
+          subtotal: number
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          gst_amount?: number
+          id?: string
+          notes?: string | null
+          order_number?: string
+          payment_status?: Database["public"]["Enums"]["payment_status"]
+          placed_by: string
+          processed_at?: string | null
+          processed_by?: string | null
+          rejection_reason?: string | null
+          retailer_id: string
+          shipping_address?: string | null
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal?: number
+          total_amount?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          gst_amount?: number
+          id?: string
+          notes?: string | null
+          order_number?: string
+          payment_status?: Database["public"]["Enums"]["payment_status"]
+          placed_by?: string
+          processed_at?: string | null
+          processed_by?: string | null
+          rejection_reason?: string | null
+          retailer_id?: string
+          shipping_address?: string | null
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal?: number
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_retailer_id_fkey"
+            columns: ["retailer_id"]
+            isOneToOne: false
+            referencedRelation: "retailers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -237,6 +353,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      current_retailer_id: { Args: never; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -247,6 +364,14 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "retailer"
+      order_status:
+        | "pending"
+        | "confirmed"
+        | "processing"
+        | "shipped"
+        | "delivered"
+        | "cancelled"
+      payment_status: "unpaid" | "partial" | "paid"
       retailer_status: "pending" | "approved" | "rejected"
       stock_status: "in_stock" | "low_stock" | "out_of_stock"
     }
@@ -377,6 +502,15 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "retailer"],
+      order_status: [
+        "pending",
+        "confirmed",
+        "processing",
+        "shipped",
+        "delivered",
+        "cancelled",
+      ],
+      payment_status: ["unpaid", "partial", "paid"],
       retailer_status: ["pending", "approved", "rejected"],
       stock_status: ["in_stock", "low_stock", "out_of_stock"],
     },
