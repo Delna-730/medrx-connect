@@ -59,7 +59,7 @@ function AdminOrderDetail() {
   }
 
   async function updatePayment(payment_status: string) {
-    const { error } = await supabase.from("orders").update({ payment_status }).eq("id", id);
+    const { error } = await supabase.from("orders").update({ payment_status: payment_status as any }).eq("id", id);
     if (error) return toast.error(error.message);
     toast.success("Payment status updated");
     qc.invalidateQueries({ queryKey: ["admin-order", id] });
