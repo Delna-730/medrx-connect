@@ -179,6 +179,12 @@ function RegisterForm({ onSuccess }: { onSuccess: () => void }) {
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Submitting…" : "Register pharmacy"}
           </Button>
+          <div className="text-center text-sm text-muted-foreground">
+            Already have an account?{" "}
+            <Link to="/auth" search={{ tab: "login" }} className="font-medium text-primary hover:underline">
+              Sign in
+            </Link>
+          </div>
         </form>
       </CardContent>
     </Card>
