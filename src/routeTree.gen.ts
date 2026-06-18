@@ -14,12 +14,19 @@ import { Route as PendingRouteImport } from './routes/pending'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRetailerRouteRouteImport } from './routes/_authenticated/retailer/route'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedRetailerIndexRouteImport } from './routes/_authenticated/retailer/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedRetailerOrdersRouteImport } from './routes/_authenticated/retailer/orders'
+import { Route as AuthenticatedRetailerCatalogRouteImport } from './routes/_authenticated/retailer/catalog'
+import { Route as AuthenticatedRetailerCartRouteImport } from './routes/_authenticated/retailer/cart'
 import { Route as AuthenticatedAdminRetailersRouteImport } from './routes/_authenticated/admin/retailers'
+import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin/orders'
 import { Route as AuthenticatedAdminMedicinesRouteImport } from './routes/_authenticated/admin/medicines'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
+import { Route as AuthenticatedRetailerOrdersIdRouteImport } from './routes/_authenticated/retailer/orders.$id'
+import { Route as AuthenticatedAdminOrdersIdRouteImport } from './routes/_authenticated/admin/orders.$id'
 
 const SetupRoute = SetupRouteImport.update({
   id: '/setup',
@@ -45,6 +52,12 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRetailerRouteRoute =
+  AuthenticatedRetailerRouteRouteImport.update({
+    id: '/retailer',
+    path: '/retailer',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -52,19 +65,43 @@ const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
 } as any)
 const AuthenticatedRetailerIndexRoute =
   AuthenticatedRetailerIndexRouteImport.update({
-    id: '/retailer/',
-    path: '/retailer/',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedRetailerRouteRoute,
   } as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthenticatedAdminRouteRoute,
 } as any)
+const AuthenticatedRetailerOrdersRoute =
+  AuthenticatedRetailerOrdersRouteImport.update({
+    id: '/orders',
+    path: '/orders',
+    getParentRoute: () => AuthenticatedRetailerRouteRoute,
+  } as any)
+const AuthenticatedRetailerCatalogRoute =
+  AuthenticatedRetailerCatalogRouteImport.update({
+    id: '/catalog',
+    path: '/catalog',
+    getParentRoute: () => AuthenticatedRetailerRouteRoute,
+  } as any)
+const AuthenticatedRetailerCartRoute =
+  AuthenticatedRetailerCartRouteImport.update({
+    id: '/cart',
+    path: '/cart',
+    getParentRoute: () => AuthenticatedRetailerRouteRoute,
+  } as any)
 const AuthenticatedAdminRetailersRoute =
   AuthenticatedAdminRetailersRouteImport.update({
     id: '/retailers',
     path: '/retailers',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminOrdersRoute =
+  AuthenticatedAdminOrdersRouteImport.update({
+    id: '/orders',
+    path: '/orders',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const AuthenticatedAdminMedicinesRoute =
@@ -79,6 +116,18 @@ const AuthenticatedAdminCategoriesRoute =
     path: '/categories',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedRetailerOrdersIdRoute =
+  AuthenticatedRetailerOrdersIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => AuthenticatedRetailerOrdersRoute,
+  } as any)
+const AuthenticatedAdminOrdersIdRoute =
+  AuthenticatedAdminOrdersIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => AuthenticatedAdminOrdersRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -86,11 +135,18 @@ export interface FileRoutesByFullPath {
   '/pending': typeof PendingRoute
   '/setup': typeof SetupRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/retailer': typeof AuthenticatedRetailerRouteRouteWithChildren
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/medicines': typeof AuthenticatedAdminMedicinesRoute
+  '/admin/orders': typeof AuthenticatedAdminOrdersRouteWithChildren
   '/admin/retailers': typeof AuthenticatedAdminRetailersRoute
+  '/retailer/cart': typeof AuthenticatedRetailerCartRoute
+  '/retailer/catalog': typeof AuthenticatedRetailerCatalogRoute
+  '/retailer/orders': typeof AuthenticatedRetailerOrdersRouteWithChildren
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/retailer/': typeof AuthenticatedRetailerIndexRoute
+  '/admin/orders/$id': typeof AuthenticatedAdminOrdersIdRoute
+  '/retailer/orders/$id': typeof AuthenticatedRetailerOrdersIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -99,9 +155,15 @@ export interface FileRoutesByTo {
   '/setup': typeof SetupRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/medicines': typeof AuthenticatedAdminMedicinesRoute
+  '/admin/orders': typeof AuthenticatedAdminOrdersRouteWithChildren
   '/admin/retailers': typeof AuthenticatedAdminRetailersRoute
+  '/retailer/cart': typeof AuthenticatedRetailerCartRoute
+  '/retailer/catalog': typeof AuthenticatedRetailerCatalogRoute
+  '/retailer/orders': typeof AuthenticatedRetailerOrdersRouteWithChildren
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/retailer': typeof AuthenticatedRetailerIndexRoute
+  '/admin/orders/$id': typeof AuthenticatedAdminOrdersIdRoute
+  '/retailer/orders/$id': typeof AuthenticatedRetailerOrdersIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -111,11 +173,18 @@ export interface FileRoutesById {
   '/pending': typeof PendingRoute
   '/setup': typeof SetupRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/_authenticated/retailer': typeof AuthenticatedRetailerRouteRouteWithChildren
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/medicines': typeof AuthenticatedAdminMedicinesRoute
+  '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRouteWithChildren
   '/_authenticated/admin/retailers': typeof AuthenticatedAdminRetailersRoute
+  '/_authenticated/retailer/cart': typeof AuthenticatedRetailerCartRoute
+  '/_authenticated/retailer/catalog': typeof AuthenticatedRetailerCatalogRoute
+  '/_authenticated/retailer/orders': typeof AuthenticatedRetailerOrdersRouteWithChildren
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/retailer/': typeof AuthenticatedRetailerIndexRoute
+  '/_authenticated/admin/orders/$id': typeof AuthenticatedAdminOrdersIdRoute
+  '/_authenticated/retailer/orders/$id': typeof AuthenticatedRetailerOrdersIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -125,11 +194,18 @@ export interface FileRouteTypes {
     | '/pending'
     | '/setup'
     | '/admin'
+    | '/retailer'
     | '/admin/categories'
     | '/admin/medicines'
+    | '/admin/orders'
     | '/admin/retailers'
+    | '/retailer/cart'
+    | '/retailer/catalog'
+    | '/retailer/orders'
     | '/admin/'
     | '/retailer/'
+    | '/admin/orders/$id'
+    | '/retailer/orders/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -138,9 +214,15 @@ export interface FileRouteTypes {
     | '/setup'
     | '/admin/categories'
     | '/admin/medicines'
+    | '/admin/orders'
     | '/admin/retailers'
+    | '/retailer/cart'
+    | '/retailer/catalog'
+    | '/retailer/orders'
     | '/admin'
     | '/retailer'
+    | '/admin/orders/$id'
+    | '/retailer/orders/$id'
   id:
     | '__root__'
     | '/'
@@ -149,11 +231,18 @@ export interface FileRouteTypes {
     | '/pending'
     | '/setup'
     | '/_authenticated/admin'
+    | '/_authenticated/retailer'
     | '/_authenticated/admin/categories'
     | '/_authenticated/admin/medicines'
+    | '/_authenticated/admin/orders'
     | '/_authenticated/admin/retailers'
+    | '/_authenticated/retailer/cart'
+    | '/_authenticated/retailer/catalog'
+    | '/_authenticated/retailer/orders'
     | '/_authenticated/admin/'
     | '/_authenticated/retailer/'
+    | '/_authenticated/admin/orders/$id'
+    | '/_authenticated/retailer/orders/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -201,6 +290,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/retailer': {
+      id: '/_authenticated/retailer'
+      path: '/retailer'
+      fullPath: '/retailer'
+      preLoaderRoute: typeof AuthenticatedRetailerRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -210,10 +306,10 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/retailer/': {
       id: '/_authenticated/retailer/'
-      path: '/retailer'
+      path: '/'
       fullPath: '/retailer/'
       preLoaderRoute: typeof AuthenticatedRetailerIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedRetailerRouteRoute
     }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
@@ -222,11 +318,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/retailer/orders': {
+      id: '/_authenticated/retailer/orders'
+      path: '/orders'
+      fullPath: '/retailer/orders'
+      preLoaderRoute: typeof AuthenticatedRetailerOrdersRouteImport
+      parentRoute: typeof AuthenticatedRetailerRouteRoute
+    }
+    '/_authenticated/retailer/catalog': {
+      id: '/_authenticated/retailer/catalog'
+      path: '/catalog'
+      fullPath: '/retailer/catalog'
+      preLoaderRoute: typeof AuthenticatedRetailerCatalogRouteImport
+      parentRoute: typeof AuthenticatedRetailerRouteRoute
+    }
+    '/_authenticated/retailer/cart': {
+      id: '/_authenticated/retailer/cart'
+      path: '/cart'
+      fullPath: '/retailer/cart'
+      preLoaderRoute: typeof AuthenticatedRetailerCartRouteImport
+      parentRoute: typeof AuthenticatedRetailerRouteRoute
+    }
     '/_authenticated/admin/retailers': {
       id: '/_authenticated/admin/retailers'
       path: '/retailers'
       fullPath: '/admin/retailers'
       preLoaderRoute: typeof AuthenticatedAdminRetailersRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/orders': {
+      id: '/_authenticated/admin/orders'
+      path: '/orders'
+      fullPath: '/admin/orders'
+      preLoaderRoute: typeof AuthenticatedAdminOrdersRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/admin/medicines': {
@@ -243,12 +367,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/retailer/orders/$id': {
+      id: '/_authenticated/retailer/orders/$id'
+      path: '/$id'
+      fullPath: '/retailer/orders/$id'
+      preLoaderRoute: typeof AuthenticatedRetailerOrdersIdRouteImport
+      parentRoute: typeof AuthenticatedRetailerOrdersRoute
+    }
+    '/_authenticated/admin/orders/$id': {
+      id: '/_authenticated/admin/orders/$id'
+      path: '/$id'
+      fullPath: '/admin/orders/$id'
+      preLoaderRoute: typeof AuthenticatedAdminOrdersIdRouteImport
+      parentRoute: typeof AuthenticatedAdminOrdersRoute
+    }
   }
 }
+
+interface AuthenticatedAdminOrdersRouteChildren {
+  AuthenticatedAdminOrdersIdRoute: typeof AuthenticatedAdminOrdersIdRoute
+}
+
+const AuthenticatedAdminOrdersRouteChildren: AuthenticatedAdminOrdersRouteChildren =
+  {
+    AuthenticatedAdminOrdersIdRoute: AuthenticatedAdminOrdersIdRoute,
+  }
+
+const AuthenticatedAdminOrdersRouteWithChildren =
+  AuthenticatedAdminOrdersRoute._addFileChildren(
+    AuthenticatedAdminOrdersRouteChildren,
+  )
 
 interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
   AuthenticatedAdminMedicinesRoute: typeof AuthenticatedAdminMedicinesRoute
+  AuthenticatedAdminOrdersRoute: typeof AuthenticatedAdminOrdersRouteWithChildren
   AuthenticatedAdminRetailersRoute: typeof AuthenticatedAdminRetailersRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
@@ -257,6 +410,7 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
   {
     AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
     AuthenticatedAdminMedicinesRoute: AuthenticatedAdminMedicinesRoute,
+    AuthenticatedAdminOrdersRoute: AuthenticatedAdminOrdersRouteWithChildren,
     AuthenticatedAdminRetailersRoute: AuthenticatedAdminRetailersRoute,
     AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   }
@@ -266,14 +420,49 @@ const AuthenticatedAdminRouteRouteWithChildren =
     AuthenticatedAdminRouteRouteChildren,
   )
 
+interface AuthenticatedRetailerOrdersRouteChildren {
+  AuthenticatedRetailerOrdersIdRoute: typeof AuthenticatedRetailerOrdersIdRoute
+}
+
+const AuthenticatedRetailerOrdersRouteChildren: AuthenticatedRetailerOrdersRouteChildren =
+  {
+    AuthenticatedRetailerOrdersIdRoute: AuthenticatedRetailerOrdersIdRoute,
+  }
+
+const AuthenticatedRetailerOrdersRouteWithChildren =
+  AuthenticatedRetailerOrdersRoute._addFileChildren(
+    AuthenticatedRetailerOrdersRouteChildren,
+  )
+
+interface AuthenticatedRetailerRouteRouteChildren {
+  AuthenticatedRetailerCartRoute: typeof AuthenticatedRetailerCartRoute
+  AuthenticatedRetailerCatalogRoute: typeof AuthenticatedRetailerCatalogRoute
+  AuthenticatedRetailerOrdersRoute: typeof AuthenticatedRetailerOrdersRouteWithChildren
+  AuthenticatedRetailerIndexRoute: typeof AuthenticatedRetailerIndexRoute
+}
+
+const AuthenticatedRetailerRouteRouteChildren: AuthenticatedRetailerRouteRouteChildren =
+  {
+    AuthenticatedRetailerCartRoute: AuthenticatedRetailerCartRoute,
+    AuthenticatedRetailerCatalogRoute: AuthenticatedRetailerCatalogRoute,
+    AuthenticatedRetailerOrdersRoute:
+      AuthenticatedRetailerOrdersRouteWithChildren,
+    AuthenticatedRetailerIndexRoute: AuthenticatedRetailerIndexRoute,
+  }
+
+const AuthenticatedRetailerRouteRouteWithChildren =
+  AuthenticatedRetailerRouteRoute._addFileChildren(
+    AuthenticatedRetailerRouteRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
-  AuthenticatedRetailerIndexRoute: typeof AuthenticatedRetailerIndexRoute
+  AuthenticatedRetailerRouteRoute: typeof AuthenticatedRetailerRouteRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
-  AuthenticatedRetailerIndexRoute: AuthenticatedRetailerIndexRoute,
+  AuthenticatedRetailerRouteRoute: AuthenticatedRetailerRouteRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =

@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Navigate, Outlet, useLocation } from "@tanstack/react-router";
-import { LayoutDashboard, Pill, Users, LogOut, Tags } from "lucide-react";
+import { LayoutDashboard, Pill, Users, LogOut, Tags, ClipboardList } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 
@@ -15,6 +15,7 @@ function AdminLayout() {
 
   const navItems = [
     { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+    { to: "/admin/orders", label: "Orders", icon: ClipboardList },
     { to: "/admin/medicines", label: "Medicines", icon: Pill },
     { to: "/admin/categories", label: "Categories", icon: Tags },
     { to: "/admin/retailers", label: "Retailers", icon: Users },
