@@ -14,16 +14,241 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      medicines: {
+        Row: {
+          batch_number: string | null
+          category_id: string | null
+          created_at: string
+          current_stock: number
+          description: string | null
+          expiry_date: string | null
+          generic_name: string | null
+          gst_percent: number
+          hsn_code: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean
+          manufacturer: string
+          manufacturing_date: string | null
+          minimum_stock_alert: number
+          mrp: number
+          name: string
+          pack_size: string | null
+          strip_size: number | null
+          updated_at: string
+          wholesale_price: number
+        }
+        Insert: {
+          batch_number?: string | null
+          category_id?: string | null
+          created_at?: string
+          current_stock?: number
+          description?: string | null
+          expiry_date?: string | null
+          generic_name?: string | null
+          gst_percent?: number
+          hsn_code?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          manufacturer: string
+          manufacturing_date?: string | null
+          minimum_stock_alert?: number
+          mrp?: number
+          name: string
+          pack_size?: string | null
+          strip_size?: number | null
+          updated_at?: string
+          wholesale_price?: number
+        }
+        Update: {
+          batch_number?: string | null
+          category_id?: string | null
+          created_at?: string
+          current_stock?: number
+          description?: string | null
+          expiry_date?: string | null
+          generic_name?: string | null
+          gst_percent?: number
+          hsn_code?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          manufacturer?: string
+          manufacturing_date?: string | null
+          minimum_stock_alert?: number
+          mrp?: number
+          name?: string
+          pack_size?: string | null
+          strip_size?: number | null
+          updated_at?: string
+          wholesale_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medicines_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      retailers: {
+        Row: {
+          address: string
+          approved_at: string | null
+          approved_by: string | null
+          city: string
+          contact_email: string
+          contact_phone: string
+          created_at: string
+          credit_limit: number
+          drug_license_number: string
+          gst_number: string | null
+          id: string
+          outstanding_balance: number
+          owner_name: string
+          pharmacy_name: string
+          pincode: string
+          rejection_reason: string | null
+          state: string
+          status: Database["public"]["Enums"]["retailer_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address: string
+          approved_at?: string | null
+          approved_by?: string | null
+          city: string
+          contact_email: string
+          contact_phone: string
+          created_at?: string
+          credit_limit?: number
+          drug_license_number: string
+          gst_number?: string | null
+          id?: string
+          outstanding_balance?: number
+          owner_name: string
+          pharmacy_name: string
+          pincode: string
+          rejection_reason?: string | null
+          state: string
+          status?: Database["public"]["Enums"]["retailer_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string
+          approved_at?: string | null
+          approved_by?: string | null
+          city?: string
+          contact_email?: string
+          contact_phone?: string
+          created_at?: string
+          credit_limit?: number
+          drug_license_number?: string
+          gst_number?: string | null
+          id?: string
+          outstanding_balance?: number
+          owner_name?: string
+          pharmacy_name?: string
+          pincode?: string
+          rejection_reason?: string | null
+          state?: string
+          status?: Database["public"]["Enums"]["retailer_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "retailer"
+      retailer_status: "pending" | "approved" | "rejected"
+      stock_status: "in_stock" | "low_stock" | "out_of_stock"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +375,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "retailer"],
+      retailer_status: ["pending", "approved", "rejected"],
+      stock_status: ["in_stock", "low_stock", "out_of_stock"],
+    },
   },
 } as const
