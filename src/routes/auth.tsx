@@ -24,12 +24,17 @@ function AuthPage() {
   return (
     <div className="min-h-screen bg-background grid place-items-center p-4">
       <div className="w-full max-w-md">
-        <Link to="/" className="mb-6 flex items-center justify-center gap-2">
+        <Link to="/" className="mb-2 flex items-center justify-center gap-2">
           <div className="grid h-9 w-9 place-items-center rounded-md bg-primary text-primary-foreground">
             <Pill className="h-5 w-5" />
           </div>
           <span className="text-lg font-semibold">MedWholesale</span>
         </Link>
+        <div className="mb-4 text-center">
+          <Link to="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <span>←</span> Back to home
+          </Link>
+        </div>
         <Tabs defaultValue={tab ?? "login"}>
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="login">Sign in</TabsTrigger>
