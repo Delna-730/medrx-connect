@@ -45,6 +45,17 @@ function OrderDetail() {
     qc.invalidateQueries({ queryKey: ["order", id] });
   }
 
+  async function downloadInvoice() {
+    if (!order || !user) return;
+    const { data: r } = await supabase.from("retailers").select("*").eq("user_id", user.id).maybeSingle();
+    const itemsWithHsn = await Promise.all(items.map(async (i: any) => {
+      const { data: m } = await supabase.from("medicines").select("hsn_code").eq("id", i.medicine_id).maybeSingle();
+      return { ...i, hsn_code: m?.hsn_code };
+    }));
+    if (!r) return toast.error("Retailer profile not found");
+    generateInvoicePDF(order as any, r as any, itemsWithHsn as any);
+  }
+
   if (isLoading || !order) return <p className="text-muted-foreground text-sm">Loading…</p>;
 
   return (
@@ -58,6 +69,7 @@ function OrderDetail() {
         </div>
         <div className="flex items-center gap-2">
           <StatusBadge status={order.status} />
+          <Button variant="outline" size="sm" onClick={downloadInvoice}><Download className="h-4 w-4 mr-1" />Invoice</Button>
           {order.status === "pending" && (
             <Button variant="outline" size="sm" onClick={cancelOrder}>Cancel order</Button>
           )}
