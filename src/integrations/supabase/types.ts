@@ -115,6 +115,36 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          link: string | null
+          message: string
+          read: boolean
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          link?: string | null
+          message: string
+          read?: boolean
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          link?: string | null
+          message?: string
+          read?: boolean
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           created_at: string
@@ -326,6 +356,57 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      stock_movements: {
+        Row: {
+          change_amount: number
+          created_at: string
+          created_by: string | null
+          id: string
+          medicine_id: string
+          new_stock: number
+          order_id: string | null
+          previous_stock: number
+          reason: string
+        }
+        Insert: {
+          change_amount: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          medicine_id: string
+          new_stock: number
+          order_id?: string | null
+          previous_stock: number
+          reason: string
+        }
+        Update: {
+          change_amount?: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          medicine_id?: string
+          new_stock?: number
+          order_id?: string | null
+          previous_stock?: number
+          reason?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stock_movements_medicine_id_fkey"
+            columns: ["medicine_id"]
+            isOneToOne: false
+            referencedRelation: "medicines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_movements_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
