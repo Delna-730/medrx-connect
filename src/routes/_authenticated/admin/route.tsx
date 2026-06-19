@@ -1,7 +1,8 @@
 import { createFileRoute, Link, Navigate, Outlet, useLocation } from "@tanstack/react-router";
-import { LayoutDashboard, Pill, Users, LogOut, Tags, ClipboardList } from "lucide-react";
+import { LayoutDashboard, Pill, Users, LogOut, Tags, ClipboardList, BarChart3, History } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
+import { NotificationBell } from "@/components/notification-bell";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminLayout,
@@ -16,7 +17,9 @@ function AdminLayout() {
   const navItems = [
     { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
     { to: "/admin/orders", label: "Orders", icon: ClipboardList },
+    { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
     { to: "/admin/medicines", label: "Medicines", icon: Pill },
+    { to: "/admin/stock-history", label: "Stock History", icon: History },
     { to: "/admin/categories", label: "Categories", icon: Tags },
     { to: "/admin/retailers", label: "Retailers", icon: Users },
   ];
@@ -59,6 +62,7 @@ function AdminLayout() {
         </div>
       </aside>
       <main className="p-6 md:p-8">
+        <div className="flex justify-end mb-4"><NotificationBell /></div>
         <Outlet />
       </main>
     </div>

@@ -1,9 +1,10 @@
 import { createFileRoute, Link, Navigate, Outlet, useLocation } from "@tanstack/react-router";
-import { LayoutDashboard, Pill, ShoppingCart, ClipboardList, LogOut } from "lucide-react";
+import { LayoutDashboard, Pill, ShoppingCart, ClipboardList, LogOut, User } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { useCart } from "@/lib/cart-context";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { NotificationBell } from "@/components/notification-bell";
 
 export const Route = createFileRoute("/_authenticated/retailer")({
   component: RetailerLayout,
@@ -23,6 +24,7 @@ function RetailerLayout() {
     { to: "/retailer/catalog", label: "Catalog", icon: Pill },
     { to: "/retailer/cart", label: "Cart", icon: ShoppingCart, badge: count },
     { to: "/retailer/orders", label: "My Orders", icon: ClipboardList },
+    { to: "/retailer/profile", label: "Profile", icon: User },
   ];
 
   return (
@@ -62,6 +64,7 @@ function RetailerLayout() {
         </div>
       </aside>
       <main className="p-6 md:p-8">
+        <div className="flex justify-end mb-4"><NotificationBell /></div>
         <Outlet />
       </main>
     </div>
