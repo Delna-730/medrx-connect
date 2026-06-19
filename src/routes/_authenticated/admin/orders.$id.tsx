@@ -81,6 +81,13 @@ function AdminOrderDetail() {
         <div className="flex items-center gap-2">
           <Badge variant="outline">{order.status}</Badge>
           <Badge variant="outline">{order.payment_status}</Badge>
+          <Button variant="outline" size="sm" onClick={async () => {
+            const itemsWithHsn = await Promise.all(items.map(async (i: any) => {
+              const { data: m } = await supabase.from("medicines").select("hsn_code").eq("id", i.medicine_id).maybeSingle();
+              return { ...i, hsn_code: m?.hsn_code };
+            }));
+            generateInvoicePDF(order as any, r as any, itemsWithHsn as any);
+          }}><Download className="h-4 w-4 mr-1" />Invoice</Button>
         </div>
       </div>
 
