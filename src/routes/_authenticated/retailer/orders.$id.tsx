@@ -1,12 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Download } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { StatusBadge } from "./orders";
+import { generateInvoicePDF } from "@/lib/invoice";
 
 export const Route = createFileRoute("/_authenticated/retailer/orders/$id")({
   component: OrderDetail,
@@ -14,6 +16,7 @@ export const Route = createFileRoute("/_authenticated/retailer/orders/$id")({
 
 function OrderDetail() {
   const { id } = Route.useParams();
+  const { user } = useAuth();
   const qc = useQueryClient();
 
   const { data: order, isLoading } = useQuery({
