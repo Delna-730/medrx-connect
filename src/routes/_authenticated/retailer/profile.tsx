@@ -54,7 +54,7 @@ function ProfilePage() {
   async function save() {
     if (!retailer) return;
     setSaving(true);
-    const { error } = await supabase.from("retailers").update(form).eq("id", retailer.id);
+    const { error } = await supabase.from("retailers").update(form as any).eq("id", retailer.id);
     setSaving(false);
     if (error) return toast.error(error.message);
     toast.success("Profile updated");

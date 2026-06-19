@@ -18,13 +18,16 @@ import { Route as AuthenticatedRetailerRouteRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedRetailerIndexRouteImport } from './routes/_authenticated/retailer/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedRetailerProfileRouteImport } from './routes/_authenticated/retailer/profile'
 import { Route as AuthenticatedRetailerOrdersRouteImport } from './routes/_authenticated/retailer/orders'
 import { Route as AuthenticatedRetailerCatalogRouteImport } from './routes/_authenticated/retailer/catalog'
 import { Route as AuthenticatedRetailerCartRouteImport } from './routes/_authenticated/retailer/cart'
+import { Route as AuthenticatedAdminStockHistoryRouteImport } from './routes/_authenticated/admin/stock-history'
 import { Route as AuthenticatedAdminRetailersRouteImport } from './routes/_authenticated/admin/retailers'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin/orders'
 import { Route as AuthenticatedAdminMedicinesRouteImport } from './routes/_authenticated/admin/medicines'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
+import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin/analytics'
 import { Route as AuthenticatedRetailerOrdersIdRouteImport } from './routes/_authenticated/retailer/orders.$id'
 import { Route as AuthenticatedAdminOrdersIdRouteImport } from './routes/_authenticated/admin/orders.$id'
 
@@ -74,6 +77,12 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRouteRoute,
 } as any)
+const AuthenticatedRetailerProfileRoute =
+  AuthenticatedRetailerProfileRouteImport.update({
+    id: '/profile',
+    path: '/profile',
+    getParentRoute: () => AuthenticatedRetailerRouteRoute,
+  } as any)
 const AuthenticatedRetailerOrdersRoute =
   AuthenticatedRetailerOrdersRouteImport.update({
     id: '/orders',
@@ -91,6 +100,12 @@ const AuthenticatedRetailerCartRoute =
     id: '/cart',
     path: '/cart',
     getParentRoute: () => AuthenticatedRetailerRouteRoute,
+  } as any)
+const AuthenticatedAdminStockHistoryRoute =
+  AuthenticatedAdminStockHistoryRouteImport.update({
+    id: '/stock-history',
+    path: '/stock-history',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const AuthenticatedAdminRetailersRoute =
   AuthenticatedAdminRetailersRouteImport.update({
@@ -116,6 +131,12 @@ const AuthenticatedAdminCategoriesRoute =
     path: '/categories',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminAnalyticsRoute =
+  AuthenticatedAdminAnalyticsRouteImport.update({
+    id: '/analytics',
+    path: '/analytics',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedRetailerOrdersIdRoute =
   AuthenticatedRetailerOrdersIdRouteImport.update({
     id: '/$id',
@@ -136,13 +157,16 @@ export interface FileRoutesByFullPath {
   '/setup': typeof SetupRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/retailer': typeof AuthenticatedRetailerRouteRouteWithChildren
+  '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/medicines': typeof AuthenticatedAdminMedicinesRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRouteWithChildren
   '/admin/retailers': typeof AuthenticatedAdminRetailersRoute
+  '/admin/stock-history': typeof AuthenticatedAdminStockHistoryRoute
   '/retailer/cart': typeof AuthenticatedRetailerCartRoute
   '/retailer/catalog': typeof AuthenticatedRetailerCatalogRoute
   '/retailer/orders': typeof AuthenticatedRetailerOrdersRouteWithChildren
+  '/retailer/profile': typeof AuthenticatedRetailerProfileRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/retailer/': typeof AuthenticatedRetailerIndexRoute
   '/admin/orders/$id': typeof AuthenticatedAdminOrdersIdRoute
@@ -153,13 +177,16 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/pending': typeof PendingRoute
   '/setup': typeof SetupRoute
+  '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/medicines': typeof AuthenticatedAdminMedicinesRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRouteWithChildren
   '/admin/retailers': typeof AuthenticatedAdminRetailersRoute
+  '/admin/stock-history': typeof AuthenticatedAdminStockHistoryRoute
   '/retailer/cart': typeof AuthenticatedRetailerCartRoute
   '/retailer/catalog': typeof AuthenticatedRetailerCatalogRoute
   '/retailer/orders': typeof AuthenticatedRetailerOrdersRouteWithChildren
+  '/retailer/profile': typeof AuthenticatedRetailerProfileRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/retailer': typeof AuthenticatedRetailerIndexRoute
   '/admin/orders/$id': typeof AuthenticatedAdminOrdersIdRoute
@@ -174,13 +201,16 @@ export interface FileRoutesById {
   '/setup': typeof SetupRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/retailer': typeof AuthenticatedRetailerRouteRouteWithChildren
+  '/_authenticated/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/medicines': typeof AuthenticatedAdminMedicinesRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRouteWithChildren
   '/_authenticated/admin/retailers': typeof AuthenticatedAdminRetailersRoute
+  '/_authenticated/admin/stock-history': typeof AuthenticatedAdminStockHistoryRoute
   '/_authenticated/retailer/cart': typeof AuthenticatedRetailerCartRoute
   '/_authenticated/retailer/catalog': typeof AuthenticatedRetailerCatalogRoute
   '/_authenticated/retailer/orders': typeof AuthenticatedRetailerOrdersRouteWithChildren
+  '/_authenticated/retailer/profile': typeof AuthenticatedRetailerProfileRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/retailer/': typeof AuthenticatedRetailerIndexRoute
   '/_authenticated/admin/orders/$id': typeof AuthenticatedAdminOrdersIdRoute
@@ -195,13 +225,16 @@ export interface FileRouteTypes {
     | '/setup'
     | '/admin'
     | '/retailer'
+    | '/admin/analytics'
     | '/admin/categories'
     | '/admin/medicines'
     | '/admin/orders'
     | '/admin/retailers'
+    | '/admin/stock-history'
     | '/retailer/cart'
     | '/retailer/catalog'
     | '/retailer/orders'
+    | '/retailer/profile'
     | '/admin/'
     | '/retailer/'
     | '/admin/orders/$id'
@@ -212,13 +245,16 @@ export interface FileRouteTypes {
     | '/auth'
     | '/pending'
     | '/setup'
+    | '/admin/analytics'
     | '/admin/categories'
     | '/admin/medicines'
     | '/admin/orders'
     | '/admin/retailers'
+    | '/admin/stock-history'
     | '/retailer/cart'
     | '/retailer/catalog'
     | '/retailer/orders'
+    | '/retailer/profile'
     | '/admin'
     | '/retailer'
     | '/admin/orders/$id'
@@ -232,13 +268,16 @@ export interface FileRouteTypes {
     | '/setup'
     | '/_authenticated/admin'
     | '/_authenticated/retailer'
+    | '/_authenticated/admin/analytics'
     | '/_authenticated/admin/categories'
     | '/_authenticated/admin/medicines'
     | '/_authenticated/admin/orders'
     | '/_authenticated/admin/retailers'
+    | '/_authenticated/admin/stock-history'
     | '/_authenticated/retailer/cart'
     | '/_authenticated/retailer/catalog'
     | '/_authenticated/retailer/orders'
+    | '/_authenticated/retailer/profile'
     | '/_authenticated/admin/'
     | '/_authenticated/retailer/'
     | '/_authenticated/admin/orders/$id'
@@ -318,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/retailer/profile': {
+      id: '/_authenticated/retailer/profile'
+      path: '/profile'
+      fullPath: '/retailer/profile'
+      preLoaderRoute: typeof AuthenticatedRetailerProfileRouteImport
+      parentRoute: typeof AuthenticatedRetailerRouteRoute
+    }
     '/_authenticated/retailer/orders': {
       id: '/_authenticated/retailer/orders'
       path: '/orders'
@@ -338,6 +384,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/retailer/cart'
       preLoaderRoute: typeof AuthenticatedRetailerCartRouteImport
       parentRoute: typeof AuthenticatedRetailerRouteRoute
+    }
+    '/_authenticated/admin/stock-history': {
+      id: '/_authenticated/admin/stock-history'
+      path: '/stock-history'
+      fullPath: '/admin/stock-history'
+      preLoaderRoute: typeof AuthenticatedAdminStockHistoryRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/admin/retailers': {
       id: '/_authenticated/admin/retailers'
@@ -365,6 +418,13 @@ declare module '@tanstack/react-router' {
       path: '/categories'
       fullPath: '/admin/categories'
       preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/analytics': {
+      id: '/_authenticated/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AuthenticatedAdminAnalyticsRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/retailer/orders/$id': {
@@ -399,19 +459,23 @@ const AuthenticatedAdminOrdersRouteWithChildren =
   )
 
 interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminAnalyticsRoute: typeof AuthenticatedAdminAnalyticsRoute
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
   AuthenticatedAdminMedicinesRoute: typeof AuthenticatedAdminMedicinesRoute
   AuthenticatedAdminOrdersRoute: typeof AuthenticatedAdminOrdersRouteWithChildren
   AuthenticatedAdminRetailersRoute: typeof AuthenticatedAdminRetailersRoute
+  AuthenticatedAdminStockHistoryRoute: typeof AuthenticatedAdminStockHistoryRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
   {
+    AuthenticatedAdminAnalyticsRoute: AuthenticatedAdminAnalyticsRoute,
     AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
     AuthenticatedAdminMedicinesRoute: AuthenticatedAdminMedicinesRoute,
     AuthenticatedAdminOrdersRoute: AuthenticatedAdminOrdersRouteWithChildren,
     AuthenticatedAdminRetailersRoute: AuthenticatedAdminRetailersRoute,
+    AuthenticatedAdminStockHistoryRoute: AuthenticatedAdminStockHistoryRoute,
     AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   }
 
@@ -438,6 +502,7 @@ interface AuthenticatedRetailerRouteRouteChildren {
   AuthenticatedRetailerCartRoute: typeof AuthenticatedRetailerCartRoute
   AuthenticatedRetailerCatalogRoute: typeof AuthenticatedRetailerCatalogRoute
   AuthenticatedRetailerOrdersRoute: typeof AuthenticatedRetailerOrdersRouteWithChildren
+  AuthenticatedRetailerProfileRoute: typeof AuthenticatedRetailerProfileRoute
   AuthenticatedRetailerIndexRoute: typeof AuthenticatedRetailerIndexRoute
 }
 
@@ -447,6 +512,7 @@ const AuthenticatedRetailerRouteRouteChildren: AuthenticatedRetailerRouteRouteCh
     AuthenticatedRetailerCatalogRoute: AuthenticatedRetailerCatalogRoute,
     AuthenticatedRetailerOrdersRoute:
       AuthenticatedRetailerOrdersRouteWithChildren,
+    AuthenticatedRetailerProfileRoute: AuthenticatedRetailerProfileRoute,
     AuthenticatedRetailerIndexRoute: AuthenticatedRetailerIndexRoute,
   }
 
